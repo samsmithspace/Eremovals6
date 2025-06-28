@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Eremovals6</string>
+    <string-array name="categories_array">
+        <item>Appliances</item>
+        <item>Furniture</item>
+    </string-array>
+</resources>
