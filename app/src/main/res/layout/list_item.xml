@@ -1,40 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:background="@drawable/list_item_background"
+    android:padding="16dp"
+    android:layout_margin="8dp"
+    android:elevation="2dp">
 
+    <!-- Item Information -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginEnd="16dp">
 
+        <!-- Item Name -->
         <TextView
             android:id="@+id/listItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="4dp"
-            android:textSize="20sp" /> <!-- Adds spacing between the two TextViews -->
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginBottom="4dp" />
 
-        <TextView
-            android:id="@+id/listItem2"
+        <!-- Price Information Container -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/listItem3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp" />
+            <!-- Normal Price -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/price_tag_background"
+                android:padding="8dp"
+                android:layout_marginEnd="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Normal"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_secondary"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/listItem2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/blue_primary"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+            <!-- Helper Price -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/price_tag_background"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Helper"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_secondary"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/listItem3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/orange_primary"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 
-    <Button
+    <!-- Delete Button -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/deleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:insetTop="6dp"
         android:text="Delete"
-        android:textAlignment="center" />
+        android:textSize="14sp"
+        android:textAllCaps="false"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:strokeColor="@color/error"
+        app:cornerRadius="8dp"
+        android:textColor="@color/error"
+        android:layout_gravity="center_vertical" />
+
 </LinearLayout>
+
+
+

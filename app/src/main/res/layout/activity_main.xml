@@ -1,39 +1,152 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:background="@color/background_light">
 
-    <!-- View Promotion Codes Button -->
-    <Button
-        android:id="@+id/btnViewPromotionCodes"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="77dp"
-        android:text="View Promotion Codes"
-        android:backgroundTint="#FF9800" /> <!-- Orange -->
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <!-- Add Prompt Code Button -->
-    <Button
-        android:id="@+id/btnAddPromptCode"
-        android:layout_width="match_parent"
-        android:layout_height="77dp"
-        android:text="Add Prompt Code"
-        android:backgroundTint="#FF9800"  /> <!-- Green -->
+        <!-- App Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="32dp">
 
-    <!-- View Price Items Button -->
-    <Button
-        android:id="@+id/btnViewPriceItems"
-        android:layout_width="match_parent"
-        android:layout_height="77dp"
-        android:text="View Items"
-        android:backgroundTint="#2196F3" /> <!-- Blue -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="E-Removals"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary_dark"
+                android:gravity="center"
+                android:layout_marginBottom="8dp" />
 
-    <!-- Add Price Item Button -->
-    <Button
-        android:id="@+id/btnAddPriceItem"
-        android:layout_width="match_parent"
-        android:layout_height="77dp"
-        android:text="Add Item"
-        android:backgroundTint="#2196F3" /> <!-- Purple -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Manage your removal services"
+                android:textSize="16sp"
+                android:textColor="@color/text_secondary"
+                android:gravity="center" />
 
-</LinearLayout>
+        </LinearLayout>
+
+        <!-- Promotion Codes Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_background"
+            android:padding="20dp"
+            android:layout_marginBottom="16dp"
+            android:elevation="4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Promotion Codes"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="16dp"
+                android:drawableStart="@drawable/ic_discount"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewPromotionCodes"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="View Promotion Codes"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button"
+                app:backgroundTint="@color/orange_primary"
+                app:cornerRadius="12dp"
+                android:layout_marginBottom="12dp"
+                app:icon="@drawable/ic_view_list"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddPromptCode"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Add Promotion Code"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/orange_primary"
+                app:cornerRadius="12dp"
+                android:textColor="@color/orange_primary"
+                app:icon="@drawable/ic_add"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconTint="@color/orange_primary" />
+
+        </LinearLayout>
+
+        <!-- Price Items Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_background"
+            android:padding="20dp"
+            android:elevation="4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Price Items"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="16dp"
+                android:drawableStart="@drawable/ic_inventory"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewPriceItems"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="View Items"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button"
+                app:backgroundTint="@color/blue_primary"
+                app:cornerRadius="12dp"
+                android:layout_marginBottom="12dp"
+                app:icon="@drawable/ic_view_list"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddPriceItem"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Add Item"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/blue_primary"
+                app:cornerRadius="12dp"
+                android:textColor="@color/blue_primary"
+                app:icon="@drawable/ic_add"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconTint="@color/blue_primary" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

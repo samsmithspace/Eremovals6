@@ -54,10 +54,24 @@ public class PromotionCodeAdapter extends ArrayAdapter<PromptCode> {
 
         // Find views
         TextView codeTextView = convertView.findViewById(R.id.tvPromotionCode);
+        TextView descriptionTextView = convertView.findViewById(R.id.tvPromotionDescription);
+        TextView discountTextView = convertView.findViewById(R.id.tvDiscountPercent);
         Button deleteButton = convertView.findViewById(R.id.btnDelete);
 
-        // Set the promotion code text
-        codeTextView.setText(code.getCodeName() + " - " + code.getDescription());
+        // Set the promotion code information
+        codeTextView.setText(code.getCodeName());
+
+        // Set description (handle empty descriptions)
+        String description = code.getDescription();
+        if (description != null && !description.trim().isEmpty()) {
+            descriptionTextView.setText(description);
+            descriptionTextView.setVisibility(View.VISIBLE);
+        } else {
+            descriptionTextView.setVisibility(View.GONE);
+        }
+
+        // Set discount percentage
+        discountTextView.setText(code.getDiscountPercent() + "% OFF");
 
         // Set delete button click listener
         deleteButton.setOnClickListener(v -> {
@@ -73,6 +87,7 @@ public class PromotionCodeAdapter extends ArrayAdapter<PromptCode> {
                             // Remove from local UI
                             codes.remove(position);
                             notifyDataSetChanged();
+                            Toast.makeText(context, "Promotion code deleted successfully", Toast.LENGTH_SHORT).show();
                         } else {
                             Log.e(TAG, "Failed to delete code from server");
                             Toast.makeText(context, "Failed to delete code from server", Toast.LENGTH_SHORT).show();
@@ -110,6 +125,3 @@ public class PromotionCodeAdapter extends ArrayAdapter<PromptCode> {
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 }
-
-
-
