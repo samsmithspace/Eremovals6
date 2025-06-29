@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.eremovals6.models.PromptCode;
 import com.example.eremovals6.models.PriceItem;
 
-@Database(entities = {PriceItem.class, PromptCode.class}, version = 3, exportSchema = false) // Incremented version
+@Database(entities = {PriceItem.class, PromptCode.class}, version = 4, exportSchema = false) // Incremented version
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
 
