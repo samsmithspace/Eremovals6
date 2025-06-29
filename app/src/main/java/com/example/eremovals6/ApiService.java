@@ -15,29 +15,34 @@ import retrofit2.http.Path;
 
 public interface ApiService {
 
-    // Existing methods
+    // ================ PROMOTION CODE ENDPOINTS ================
+
     @POST("/api/promocode/add")
     Call<Void> addPromptCode(@Body PromptCode promptCode);
-
-    @PUT("/api/prompt-code/{id}")
-    Call<Void> updatePromptCode(@Path("id") String id, @Body PromptCode promptCode);
-
-    @GET("/api/price-item/api/price-item")
-    Call<List<PriceItem>> getAllPriceItems();
-
-    @POST("/api/price-item")
-    Call<Void> addPriceItem(@Body PriceItem priceItem);
 
     @GET("/api/promocode/getall")
     Call<List<PromptCode>> getAllPromotionCodes();
 
+    // Updated to match your backend PUT route
+    @PUT("/api/promocode/{id}")
+    Call<Void> updatePromptCode(@Path("id") String id, @Body PromptCode promptCode);
+
+    @DELETE("/api/promocode/delete/{codeId}")
+    Call<Void> deletePromotionCode(@Path("codeId") String codeId);
+
+    // ================ PRICE ITEM ENDPOINTS ================
+
+    @POST("/api/price-item")
+    Call<Void> addPriceItem(@Body PriceItem priceItem);
+
+    // Correct path as per your backend
+    @GET("/api/price-item/api/price-item")
+    Call<List<PriceItem>> getAllPriceItems();
+
+    // Updated to match your backend PUT route
     @PUT("/api/price-item/{id}")
     Call<Void> updatePriceItem(@Path("id") String id, @Body PriceItem priceItem);
 
     @DELETE("/api/price-item/{itemName}")
     Call<Void> deletePriceItem(@Path("itemName") String itemName);
-
-    // Add method to delete a promotion code
-    @DELETE("/api/promocode/delete/{codeId}")
-    Call<Void> deletePromotionCode(@Path("codeId") String codeId);
 }

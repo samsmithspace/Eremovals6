@@ -1,39 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Use a wrapper LinearLayout to create the gap effect -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:background="@color/primary_light"
-    android:padding="16dp"
-    android:layout_margin="4dp"
-    android:gravity="center_vertical">
+    android:orientation="vertical"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="4dp"
+    android:background="@color/background_light">
 
-    <!-- Category Icon -->
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_inventory"
-        android:layout_marginEnd="12dp"
-        app:tint="@color/primary_dark" />
-
-    <!-- Category Name -->
-    <TextView
-        android:id="@+id/listGroup"
-        android:layout_width="0dp"
+    <!-- Actual Header Content -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@color/primary_dark"
-        android:ellipsize="end"
-        android:singleLine="true" />
+        android:orientation="horizontal"
+        android:background="@color/primary_light"
+        android:padding="20dp"
+        android:gravity="center_vertical"
+        android:elevation="2dp">
 
-    <!-- Expand/Collapse Indicator -->
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/ic_expand_more"
-        app:tint="@color/primary_dark" />
+        <!-- Category Icon -->
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_inventory"
+            android:layout_marginEnd="16dp"
+            app:tint="@color/primary_dark" />
+
+        <!-- Category Name -->
+        <TextView
+            android:id="@+id/listGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_dark"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:letterSpacing="0.02"
+            android:fontFamily="sans-serif-medium" />
+
+        <!-- Expand/Collapse Indicator -->
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_expand_more"
+            app:tint="@color/primary_dark" />
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -24,6 +24,7 @@ public class DisplayPriceItemsActivity extends AppCompatActivity {
     private ExpandableListView expandableListView;
     private PriceItemsAdapter adapter;
     private HashMap<String, List<String>> categoryItemsMap = new HashMap<>();
+    private HashMap<String, List<PriceItem>> categoryPriceItemsMap = new HashMap<>();
     private List<String> categories = new ArrayList<>();
     private PriceItemDao priceItemDao;
     private ApiService apiService;
@@ -47,6 +48,17 @@ public class DisplayPriceItemsActivity extends AppCompatActivity {
         apiService = retrofit.create(ApiService.class);
 
         // Check for internet connection and fetch data accordingly
+        if (isConnected()) {
+            fetchPriceItemsFromServer();
+        } else {
+            fetchPriceItemsFromDatabase();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh data when returning from edit activity
         if (isConnected()) {
             fetchPriceItemsFromServer();
         } else {
@@ -93,26 +105,27 @@ public class DisplayPriceItemsActivity extends AppCompatActivity {
     }
 
     // Display the list of items grouped by category in the ExpandableListView
-// In DisplayPriceItemsActivity.java
     private void displayItems(List<PriceItem> items) {
         // Clear existing data to avoid duplicates in the display
         categoryItemsMap.clear();
+        categoryPriceItemsMap.clear();
         categories.clear();
 
         for (PriceItem item : items) {
             String category = item.getCategory();
             if (!categoryItemsMap.containsKey(category)) {
                 categoryItemsMap.put(category, new ArrayList<>());
+                categoryPriceItemsMap.put(category, new ArrayList<>());
                 categories.add(category);
             }
-            categoryItemsMap.get(category).add(item.getItemName() + "|Normal Price-£" + item.getNormalPrice()+"|Helper Price-£" + item.getHelperPrice());
+            categoryItemsMap.get(category).add(item.getItemName() + "|Normal Price-£" + item.getNormalPrice() + "|Helper Price-£" + item.getHelperPrice());
+            categoryPriceItemsMap.get(category).add(item);
         }
 
-        // Pass priceItemDao as the fourth argument
-        adapter = new PriceItemsAdapter(this, categories, categoryItemsMap, priceItemDao);
+        // Pass both hashmaps to the adapter
+        adapter = new PriceItemsAdapter(this, categories, categoryItemsMap, categoryPriceItemsMap, priceItemDao);
         expandableListView.setAdapter(adapter);
     }
-
 
     // Helper method to check network connectivity
     private boolean isConnected() {

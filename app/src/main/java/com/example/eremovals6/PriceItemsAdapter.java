@@ -1,6 +1,7 @@
 package com.example.eremovals6;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.view.LayoutInflater;
@@ -29,21 +30,26 @@ public class PriceItemsAdapter extends BaseExpandableListAdapter {
     private final Context context;
     private final List<String> categories;
     private final HashMap<String, List<String>> categoryItemsMap;
+    private final HashMap<String, List<PriceItem>> categoryPriceItemsMap;
     private final PriceItemDao priceItemDao;
     private ApiService apiService;
 
-    public PriceItemsAdapter(Context context, List<String> categories, HashMap<String, List<String>> categoryItemsMap, PriceItemDao priceItemDao) {
+    public PriceItemsAdapter(Context context, List<String> categories,
+                             HashMap<String, List<String>> categoryItemsMap,
+                             HashMap<String, List<PriceItem>> categoryPriceItemsMap,
+                             PriceItemDao priceItemDao) {
         this.context = context;
         this.categories = categories;
         this.categoryItemsMap = categoryItemsMap;
+        this.categoryPriceItemsMap = categoryPriceItemsMap;
         this.priceItemDao = priceItemDao;
+
         // Initialize Retrofit for API calls
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         apiService = retrofit.create(ApiService.class);
-
     }
 
     @Override
@@ -97,35 +103,60 @@ public class PriceItemsAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final String itemNameWithPrice = (String) getChild(groupPosition, childPosition);
 
+        // Get the actual PriceItem object
+        String category = categories.get(groupPosition);
+        PriceItem currentPriceItem = null;
+        if (categoryPriceItemsMap.containsKey(category)) {
+            List<PriceItem> itemsInCategory = categoryPriceItemsMap.get(category);
+            if (childPosition < itemsInCategory.size()) {
+                currentPriceItem = itemsInCategory.get(childPosition);
+            }
+        }
+
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.list_item, parent, false);
         }
 
-
         // Find views
         TextView itemNamePriceTextView = convertView.findViewById(R.id.listItem);
-        TextView normalPriceTextView = convertView.findViewById(R.id.listItem2); // Second TextView
-        TextView helperPriceTextView = convertView.findViewById(R.id.listItem3); // Second TextView
+        TextView normalPriceTextView = convertView.findViewById(R.id.listItem2);
+        TextView helperPriceTextView = convertView.findViewById(R.id.listItem3);
+        Button editButton = convertView.findViewById(R.id.editButton);
         Button deleteButton = convertView.findViewById(R.id.deleteButton);
 
-        // Parse the itemNameWithPrice string (assume format: "ItemName - Price - HelperPrice")
+        // Parse the itemNameWithPrice string
         String[] parts = itemNameWithPrice.split("\\|");
-
         String itemName = parts[0];
-        String price = parts.length > 1 ? parts[1] : "N/A"; // Fallback if price is missing
-        String helperPrice = parts.length > 2 ? parts[2] : "N/A"; // Fallback if helper price is missing
-
+        String price = parts.length > 1 ? parts[1] : "N/A";
+        String helperPrice = parts.length > 2 ? parts[2] : "N/A";
 
         // Set text
         itemNamePriceTextView.setText(itemName);
         normalPriceTextView.setText(price);
         helperPriceTextView.setText(helperPrice);
 
+        // Set edit button click listener
+        final PriceItem finalCurrentPriceItem = currentPriceItem;
+        editButton.setOnClickListener(v -> {
+            if (finalCurrentPriceItem != null) {
+                Intent intent = new Intent(context, EditPriceItemActivity.class);
+                // Use serverId (MongoDB _id) instead of local Room ID
+                String idToPass = finalCurrentPriceItem.getServerId() != null ?
+                        finalCurrentPriceItem.getServerId() : String.valueOf(finalCurrentPriceItem.getId());
+                intent.putExtra("ITEM_ID", idToPass);
+                intent.putExtra("ITEM_NAME", finalCurrentPriceItem.getItemName());
+                intent.putExtra("ITEM_CATEGORY", finalCurrentPriceItem.getCategory());
+                intent.putExtra("NORMAL_PRICE", finalCurrentPriceItem.getNormalPrice());
+                intent.putExtra("HELPER_PRICE", finalCurrentPriceItem.getHelperPrice());
+                context.startActivity(intent);
+            } else {
+                Toast.makeText(context, "Unable to edit this item", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Set delete button click listener
         deleteButton.setOnClickListener(v -> {
-            //String itemName = itemNameWithPrice.split(" - ")[0]; // Assuming item name is the first part
             Log.d(TAG, "Attempting to delete item: " + itemName);
 
             if (isConnected()) {
@@ -133,11 +164,13 @@ public class PriceItemsAdapter extends BaseExpandableListAdapter {
                 apiService.deletePriceItem(itemName).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-
                         if (response.isSuccessful()) {
                             Log.d(TAG, "Item deleted from server successfully");
                             // Remove from local UI
                             categoryItemsMap.get(categories.get(groupPosition)).remove(itemNameWithPrice);
+                            if (categoryPriceItemsMap.containsKey(category) && finalCurrentPriceItem != null) {
+                                categoryPriceItemsMap.get(category).remove(finalCurrentPriceItem);
+                            }
                             ((DisplayPriceItemsActivity) context).runOnUiThread(() -> notifyDataSetChanged());
                         } else {
                             Log.e(TAG, "Failed to delete item from server");
@@ -156,10 +189,13 @@ public class PriceItemsAdapter extends BaseExpandableListAdapter {
             } else {
                 // If offline, delete the item locally
                 new Thread(() -> {
-                    priceItemDao.deleteByName(itemName); // Delete item from local Room database
+                    priceItemDao.deleteByName(itemName);
                     Log.d(TAG, "Item deleted from local database");
                     // Update local UI
                     categoryItemsMap.get(categories.get(groupPosition)).remove(itemNameWithPrice);
+                    if (categoryPriceItemsMap.containsKey(category) && finalCurrentPriceItem != null) {
+                        categoryPriceItemsMap.get(category).remove(finalCurrentPriceItem);
+                    }
                     ((DisplayPriceItemsActivity) context).runOnUiThread(() -> {
                         notifyDataSetChanged();
                         Toast.makeText(context, "Deleted locally. Will sync when online.", Toast.LENGTH_SHORT).show();
@@ -168,14 +204,15 @@ public class PriceItemsAdapter extends BaseExpandableListAdapter {
             }
         });
 
-
         return convertView;
     }
+
     private boolean isConnected() {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
+
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;

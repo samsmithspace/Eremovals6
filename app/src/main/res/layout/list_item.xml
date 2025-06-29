@@ -1,114 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Use a wrapper LinearLayout to create the gap effect -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="@drawable/list_item_background"
-    android:padding="16dp"
-    android:layout_margin="8dp"
-    android:elevation="2dp">
+    android:orientation="vertical"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:background="@color/background_light">
 
-    <!-- Item Information -->
+    <!-- Actual Card Content -->
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_marginEnd="16dp">
+        android:orientation="horizontal"
+        android:background="@drawable/list_item_background"
+        android:padding="18dp"
+        android:elevation="3dp">
 
-        <!-- Item Name -->
-        <TextView
-            android:id="@+id/listItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:layout_marginBottom="4dp" />
-
-        <!-- Price Information Container -->
+        <!-- Item Information -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="16dp">
 
-            <!-- Normal Price -->
-            <LinearLayout
-                android:layout_width="0dp"
+            <!-- Item Name -->
+            <TextView
+                android:id="@+id/listItem"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="@drawable/price_tag_background"
-                android:padding="8dp"
-                android:layout_marginEnd="8dp">
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="12dp"
+                android:letterSpacing="0.01"
+                android:fontFamily="sans-serif-medium" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Normal"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_secondary"
-                    android:gravity="center" />
-
-                <TextView
-                    android:id="@+id/listItem2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/blue_primary"
-                    android:gravity="center" />
-
-            </LinearLayout>
-
-            <!-- Helper Price -->
+            <!-- Price Information Container -->
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="@drawable/price_tag_background"
-                android:padding="8dp">
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
 
-                <TextView
-                    android:layout_width="match_parent"
+                <!-- Normal Price -->
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Helper"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_secondary"
-                    android:gravity="center" />
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@drawable/price_tag_background"
+                    android:padding="12dp"
+                    android:layout_marginEnd="10dp"
+                    android:elevation="1dp">
 
-                <TextView
-                    android:id="@+id/listItem3"
-                    android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Normal"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_secondary"
+                        android:gravity="center"
+                        android:layout_marginBottom="4dp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.1" />
+
+                    <TextView
+                        android:id="@+id/listItem2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue_primary"
+                        android:gravity="center"
+                        android:fontFamily="sans-serif-medium" />
+
+                </LinearLayout>
+
+                <!-- Helper Price -->
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/orange_primary"
-                    android:gravity="center" />
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@drawable/price_tag_background"
+                    android:padding="12dp"
+                    android:elevation="1dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Helper"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_secondary"
+                        android:gravity="center"
+                        android:layout_marginBottom="4dp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.1" />
+
+                    <TextView
+                        android:id="@+id/listItem3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/orange_primary"
+                        android:gravity="center"
+                        android:fontFamily="sans-serif-medium" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <!-- Edit Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/editButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:textSize="14sp"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button"
+                app:backgroundTint="@color/blue_primary"
+                app:cornerRadius="8dp"
+                android:textColor="@color/white"
+                android:minWidth="80dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_marginBottom="8dp"
+                app:icon="@drawable/ic_edit"
+                app:iconGravity="textStart"
+                app:iconPadding="4dp" />
+
+            <!-- Delete Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/deleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:textSize="14sp"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/error"
+                app:strokeWidth="2dp"
+                app:cornerRadius="8dp"
+                android:textColor="@color/error"
+                android:minWidth="80dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
-    <!-- Delete Button -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/deleteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete"
-        android:textSize="14sp"
-        android:textAllCaps="false"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        app:strokeColor="@color/error"
-        app:cornerRadius="8dp"
-        android:textColor="@color/error"
-        android:layout_gravity="center_vertical" />
-
 </LinearLayout>
-
-
-

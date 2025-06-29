@@ -1,6 +1,7 @@
 package com.example.eremovals6;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.view.LayoutInflater;
@@ -56,6 +57,7 @@ public class PromotionCodeAdapter extends ArrayAdapter<PromptCode> {
         TextView codeTextView = convertView.findViewById(R.id.tvPromotionCode);
         TextView descriptionTextView = convertView.findViewById(R.id.tvPromotionDescription);
         TextView discountTextView = convertView.findViewById(R.id.tvDiscountPercent);
+        Button editButton = convertView.findViewById(R.id.btnEdit);
         Button deleteButton = convertView.findViewById(R.id.btnDelete);
 
         // Set the promotion code information
@@ -72,6 +74,18 @@ public class PromotionCodeAdapter extends ArrayAdapter<PromptCode> {
 
         // Set discount percentage
         discountTextView.setText(code.getDiscountPercent() + "% OFF");
+
+        // Set edit button click listener
+        editButton.setOnClickListener(v -> {
+            Intent intent = new Intent(context, EditPromptCodeActivity.class);
+            // Use serverId (MongoDB _id) instead of local Room ID
+            String idToPass = code.getServerId() != null ? code.getServerId() : String.valueOf(code.getId());
+            intent.putExtra("CODE_ID", idToPass);
+            intent.putExtra("CODE_NAME", code.getCodeName());
+            intent.putExtra("DESCRIPTION", code.getDescription());
+            intent.putExtra("DISCOUNT_PERCENT", code.getDiscountPercent());
+            context.startActivity(intent);
+        });
 
         // Set delete button click listener
         deleteButton.setOnClickListener(v -> {

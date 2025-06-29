@@ -6,26 +6,27 @@
     android:orientation="vertical"
     android:background="@color/background_light">
 
-    <!-- Header -->
+    <!-- Header with Gradient -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/blue_primary"
-        android:padding="24dp"
-        android:elevation="4dp">
+        android:padding="28dp"
+        android:elevation="6dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Price Items"
-            android:textSize="24sp"
+            android:textSize="26sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_marginBottom="8dp"
             android:drawableStart="@drawable/ic_inventory"
-            android:drawablePadding="12dp"
-            android:gravity="center_vertical" />
+            android:drawablePadding="14dp"
+            android:gravity="center_vertical"
+            android:fontFamily="sans-serif-medium" />
 
         <TextView
             android:layout_width="match_parent"
@@ -34,7 +35,7 @@
             android:textSize="16sp"
             android:textColor="@color/white"
             android:gravity="center"
-            android:alpha="0.9" />
+            android:alpha="0.95" />
 
     </LinearLayout>
 
@@ -43,10 +44,14 @@
         android:id="@+id/expandableListViewPriceItems"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="12dp"
+        android:clipToPadding="false"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        android:groupIndicator="@null" />
+        android:groupIndicator="@null"
+        android:scrollbarStyle="outsideOverlay"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="20dp" />
 
 </LinearLayout>
-

@@ -48,6 +48,17 @@ public class DisplayPromotionCodesActivity extends AppCompatActivity {
                 .build();
         apiService = retrofit.create(ApiService.class);
 
+        loadData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh data when returning from edit activity
+        loadData();
+    }
+
+    private void loadData() {
         if (isConnected()) {
             Log.d(TAG, "server------------------: ");
             fetchPromotionCodesFromServer();
@@ -92,7 +103,6 @@ public class DisplayPromotionCodesActivity extends AppCompatActivity {
         });
     }
 
-
     // Fetch promotion codes from the local Room database when offline
     private void fetchPromotionCodesFromDatabase() {
         new Thread(() -> {
@@ -108,17 +118,13 @@ public class DisplayPromotionCodesActivity extends AppCompatActivity {
         }).start();
     }
 
-
     private void displayCodes(List<PromptCode> codes) {
         PromotionCodeAdapter adapter = new PromotionCodeAdapter(this, codes, promptCodeDao);
         listView.setAdapter(adapter);
     }
 
-
     // Helper method to check network connectivity
     private boolean isConnected() {
-
-
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
